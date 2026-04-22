@@ -5,13 +5,18 @@ const deviceId = topic.split("/")[1] || "device-001";
 const url = process.env.MQTT_URL || "mqtt://localhost:1883";
 
 let seq = 0;
+let timer = null;
 
 const client = mqtt.connect(url);
 
 client.on("connect", () => {
   console.log(`[simulator] connected to ${url}`);
 
-  setInterval(() => {
+  if (timer) {
+    clearInterval(timer);
+  }
+
+  timer = setInterval(() => {
     const payload = {
       device_id: deviceId,
       ts: new Date().toISOString(),
@@ -31,5 +36,16 @@ client.on("connect", () => {
 });
 
 client.on("error", (err) => {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
   console.error("[simulator] mqtt error:", err.message);
+});
+
+client.on("close", () => {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
 });
