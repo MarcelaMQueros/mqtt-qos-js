@@ -8,7 +8,7 @@ This repository includes a starter project for a 2-week IoT security sprint usin
 
 All new lab files are under:
 
-- `/home/runner/work/mqtt-qos-js/mqtt-qos-js/labs/sprint3-nodered-hello`
+- `labs/sprint3-nodered-hello`
 
 ### Services
 
@@ -22,7 +22,7 @@ All new lab files are under:
 ### Run
 
 ```bash
-cd /home/runner/work/mqtt-qos-js/mqtt-qos-js/labs/sprint3-nodered-hello
+cd labs/sprint3-nodered-hello
 docker compose up -d --build
 ```
 
@@ -46,14 +46,14 @@ docker compose up -d --build
 ### Logs
 
 ```bash
-cd /home/runner/work/mqtt-qos-js/mqtt-qos-js/labs/sprint3-nodered-hello
+cd labs/sprint3-nodered-hello
 docker compose logs -f simulator consumer nodered mosquitto
 ```
 
 ### Stop
 
 ```bash
-cd /home/runner/work/mqtt-qos-js/mqtt-qos-js/labs/sprint3-nodered-hello
+cd labs/sprint3-nodered-hello
 docker compose down
 ```
 
