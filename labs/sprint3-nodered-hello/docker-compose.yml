@@ -1,0 +1,44 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  nodered:
+    image: nodered/node-red:latest
+    depends_on:
+      - mosquitto
+    environment:
+      - FLOWS=flows.json
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./nodered/data/flows.json:/data/flows.json:ro
+
+  simulator:
+    build:
+      context: ./simulator
+    depends_on:
+      - mosquitto
+    environment:
+      - MQTT_URL=mqtt://host.docker.internal:1883
+      - MQTT_TOPIC=devices/device-001/telemetry
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: ["node", "device-simulator.js"]
+
+  consumer:
+    build:
+      context: ./simulator
+    depends_on:
+      - mosquitto
+    environment:
+      - MQTT_URL=mqtt://host.docker.internal:1883
+      - MQTT_TOPIC=devices/+/telemetry
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: ["node", "subscriber.js"]
