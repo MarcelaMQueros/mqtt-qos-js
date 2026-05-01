@@ -1,0 +1,282 @@
+[
+    {
+        "id": "d8c3a92d1fcecba3",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "90fea0352c40d6ea",
+        "type": "mqtt in",
+        "z": "d8c3a92d1fcecba3",
+        "name": "",
+        "topic": "devices/device-001/telemetry",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b5ae29a16bc7b498",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "ae501b10f1ec4808",
+                "be1eb575b657ad74",
+                "f3f8e0f7778af2ea",
+                "e3c8b1dd4a55491f"
+            ]
+        ]
+    },
+    {
+        "id": "e3c8b1dd4a55491f",
+        "type": "debug",
+        "z": "d8c3a92d1fcecba3",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "93c791a3f742fea1",
+        "type": "ui_gauge",
+        "z": "d8c3a92d1fcecba3",
+        "name": "",
+        "group": "c03e7d18db108323",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Medidor",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "5000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "1000",
+        "seg2": "3000",
+        "diff": false,
+        "className": "",
+        "x": 760,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "a400262ccb30dd17",
+        "type": "ui_chart",
+        "z": "d8c3a92d1fcecba3",
+        "name": "",
+        "group": "c03e7d18db108323",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura (°C)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 850,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "20f22dce195e5a23",
+        "type": "ui_text",
+        "z": "d8c3a92d1fcecba3",
+        "group": "c03e7d18db108323",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Mensagem",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 770,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "ae501b10f1ec4808",
+        "type": "change",
+        "z": "d8c3a92d1fcecba3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temp_c",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 520,
+        "wires": [
+            [
+                "a400262ccb30dd17"
+            ]
+        ]
+    },
+    {
+        "id": "be1eb575b657ad74",
+        "type": "change",
+        "z": "d8c3a92d1fcecba3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.seq",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 580,
+        "wires": [
+            [
+                "93c791a3f742fea1"
+            ]
+        ]
+    },
+    {
+        "id": "f3f8e0f7778af2ea",
+        "type": "change",
+        "z": "d8c3a92d1fcecba3",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.message",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 640,
+        "wires": [
+            [
+                "20f22dce195e5a23"
+            ]
+        ]
+    },
+    {
+        "id": "b5ae29a16bc7b498",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c03e7d18db108323",
+        "type": "ui_group",
+        "name": "Sensores",
+        "tab": "73b4d09412bb33cb",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "73b4d09412bb33cb",
+        "type": "ui_tab",
+        "name": "Estufa Agrícola",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "f05112bee47050d8",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
